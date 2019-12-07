@@ -3,8 +3,8 @@ import { render } from 'react-dom';
 import { Window, DragArea, useWindow } from '../../src';
 
 const Size = () => {
-  const { state } = useWindow();
-  return <span>{JSON.stringify(state)}</span>;
+  const { windowState } = useWindow();
+  return <span>{JSON.stringify(windowState)}</span>;
 };
 
 const App: React.FC = () => {
