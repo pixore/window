@@ -12,17 +12,33 @@ interface PropTypes {
   isResizeable?: boolean;
   withBackdrop?: boolean;
   initialState: State;
-  minimalState?: State;
+  minState?: Partial<State>;
+  maxState?: Partial<State>;
 }
 
 interface ContextState {
   onDrag: (event: React.MouseEvent) => void;
+  state: State;
 }
+const defaultMinState: State = {
+  top: 0,
+  left: 0,
+  width: 50,
+  height: 50,
+};
+
+const defaultMaxState: State = {
+  top: Infinity,
+  left: Infinity,
+  width: Infinity,
+  height: Infinity,
+};
 
 const Context = React.createContext<ContextState>({
   onDrag: () => {
     console.error('DragArea used outside a Window');
   },
+  state: defaultMinState,
 });
 
 const Window: React.FC<PropTypes> = (props) => {
@@ -31,12 +47,12 @@ const Window: React.FC<PropTypes> = (props) => {
     isResizeable = true,
     children,
     withBackdrop = false,
-    minimalState = defaultMinialState,
-    initialState = minimalState,
+    initialState,
   } = props;
 
-  const minimalStateRef = React.useRef(minimalState);
-  const [state, setState] = React.useState(initialState);
+  const minState = Object.assign(defaultMinState, props.minState);
+  const maxState = Object.assign(defaultMaxState, props.maxState);
+  const [state, setState] = React.useState(initialState || minState);
   const classNames = Config.useClassNames();
   const style = {
     ...defaultWindowStyle,
@@ -44,19 +60,21 @@ const Window: React.FC<PropTypes> = (props) => {
   };
 
   const onResize = (diff: State) => {
-    setState((state) => getNewState(minimalStateRef.current, state, diff));
+    setState((state) => getNewState(minState, maxState, state, diff));
   };
 
-  const { onMouseDown } = useMouseDiff((diff: Vector) => {
-    setState((state) =>
-      getNewState(minimalStateRef.current, state, {
+  const handleOnDiff = (diff: Vector) => {
+    setState((state) => {
+      return getNewState(minState, maxState, state, {
         top: diff.y,
         left: diff.x,
         width: 0,
         height: 0,
-      }),
-    );
-  });
+      });
+    });
+  };
+
+  const { onMouseDown } = useMouseDiff(handleOnDiff);
 
   const onDrag = (event: React.MouseEvent) => {
     onMouseDown(event);
@@ -64,6 +82,7 @@ const Window: React.FC<PropTypes> = (props) => {
 
   const contextValue = {
     onDrag,
+    state,
   };
 
   return (
@@ -109,12 +128,6 @@ const Window: React.FC<PropTypes> = (props) => {
 };
 
 const useWindow = () => React.useContext(Context);
+
 export { useWindow };
 export default Window;
-
-const defaultMinialState: State = {
-  top: 0,
-  left: 0,
-  width: 50,
-  height: 50,
-};

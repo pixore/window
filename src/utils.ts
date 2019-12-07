@@ -1,16 +1,29 @@
 import { State } from './types';
 
-const getNewState = (minimalState: State, state: State, diff: State): State => {
+const getNumberBetween = (min: number, max: number, value: number): number => {
+  return Math.min(max, Math.max(min, value));
+};
+
+const getNewState = (
+  minState: State,
+  maxState: State,
+  state: State,
+  diff: State,
+): State => {
   const newTop = state.top - diff.top;
   const newLeft = state.left - diff.left;
   const newWidth = state.width - diff.width;
   const newHeight = state.height - diff.height;
 
+  if (newTop === 0 && newLeft === 0 && newWidth === 0 && newHeight === 0) {
+    return state;
+  }
+
   const newState = {
-    top: newTop >= minimalState.top ? newTop : minimalState.top,
-    left: newLeft >= minimalState.left ? newLeft : minimalState.left,
-    width: newWidth >= minimalState.width ? newWidth : minimalState.width,
-    height: newHeight >= minimalState.height ? newHeight : minimalState.height,
+    top: getNumberBetween(minState.top, maxState.top - newHeight, newTop),
+    left: getNumberBetween(minState.left, maxState.left - newWidth, newLeft),
+    width: getNumberBetween(minState.width, maxState.width, newWidth),
+    height: getNumberBetween(minState.height, maxState.height, newHeight),
   };
   return newState;
 };
