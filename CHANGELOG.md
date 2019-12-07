@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.1.0](https://github.com/pixore/window/compare/v0.0.2...v0.1.0) (2019-12-07)
+
+
+### ⚠ BREAKING CHANGES
+
+* **window:** BREAKING CHANGE: remove isOpen prop and change state for windowState
+* **window:** change minimalState prop to minState
+
+### Features
+
+* **window:** support for request to close the window ([6757440](https://github.com/pixore/window/commit/67574408bdd1484c072f98c7f8c539fd44aa226f))
+* **window:** support window max state ([2dc8ad8](https://github.com/pixore/window/commit/2dc8ad8b98313feac47f7a868bc7fe6ae03c9450))
+
 ### 0.0.2 (2019-12-05)
 
 
