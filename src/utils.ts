@@ -28,4 +28,6 @@ const getNewState = (
   return newState;
 };
 
-export { getNewState };
+const noop = () => undefined;
+
+export { getNewState, noop };

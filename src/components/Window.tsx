@@ -2,27 +2,23 @@ import * as React from 'react';
 import Portal from '@reach/portal';
 import ResizeBar from './ResizeBar';
 import { ResizeBarTypes, State, Vector } from '../types';
-import { getNewState } from '../utils';
+import { getNewState, noop } from '../utils';
 import Config from '../contexts/Config';
 import { defaultBackdropStyle, defaultWindowStyle } from '../styles';
 import useMouseDiff from '../hooks/useMouseDiff';
 
 interface PropTypes {
-  isOpen?: boolean;
   isResizeable?: boolean;
   withBackdrop?: boolean;
   initialState: State;
   minState?: Partial<State>;
   maxState?: Partial<State>;
+  onRequestedClose?: () => void;
 }
 
-interface ContextState {
-  onDrag: (event: React.MouseEvent) => void;
-  state: State;
-}
 const defaultMinState: State = {
-  top: 0,
-  left: 0,
+  top: -Infinity,
+  left: -Infinity,
   width: 50,
   height: 50,
 };
@@ -34,22 +30,30 @@ const defaultMaxState: State = {
   height: Infinity,
 };
 
+interface ContextState {
+  onDrag: (event: React.MouseEvent) => void;
+  windowState: State;
+  requestedClose: () => void;
+}
+
 const Context = React.createContext<ContextState>({
   onDrag: () => {
     console.error('DragArea used outside a Window');
   },
-  state: defaultMinState,
+  requestedClose: () => {
+    console.error("This shouln't  happen");
+  },
+  windowState: defaultMinState,
 });
 
 const Window: React.FC<PropTypes> = (props) => {
   const {
-    isOpen = true,
+    onRequestedClose = noop,
     isResizeable = true,
     children,
     withBackdrop = false,
     initialState,
   } = props;
-
   const minState = Object.assign(defaultMinState, props.minState);
   const maxState = Object.assign(defaultMaxState, props.maxState);
   const [state, setState] = React.useState(initialState || minState);
@@ -82,47 +86,54 @@ const Window: React.FC<PropTypes> = (props) => {
 
   const contextValue = {
     onDrag,
-    state,
+    windowState: state,
+    requestedClose: onRequestedClose,
+  };
+
+  const onKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === 'Escape') {
+      event.stopPropagation();
+      onRequestedClose();
+    }
+  };
+
+  const onClickBackDrop = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    onRequestedClose();
   };
 
   return (
     <Portal>
-      {isOpen && (
-        <>
-          {withBackdrop && (
-            <div className={classNames.backdrop} style={defaultBackdropStyle} />
-          )}
-          <Context.Provider value={contextValue}>
-            <div className={classNames.window} style={style}>
-              {isResizeable && (
-                <>
-                  <ResizeBar onResize={onResize} type={ResizeBarTypes.TOP} />
-                  <ResizeBar onResize={onResize} type={ResizeBarTypes.BOTTOM} />
-                  <ResizeBar onResize={onResize} type={ResizeBarTypes.LEFT} />
-                  <ResizeBar onResize={onResize} type={ResizeBarTypes.RIGHT} />
-                  <ResizeBar
-                    onResize={onResize}
-                    type={ResizeBarTypes.TOP_LEFT}
-                  />
-                  <ResizeBar
-                    onResize={onResize}
-                    type={ResizeBarTypes.TOP_RIGHT}
-                  />
-                  <ResizeBar
-                    onResize={onResize}
-                    type={ResizeBarTypes.BOTTOM_LEFT}
-                  />
-                  <ResizeBar
-                    onResize={onResize}
-                    type={ResizeBarTypes.BOTTOM_RIGHT}
-                  />
-                </>
-              )}
-              {children}
-            </div>
-          </Context.Provider>
-        </>
+      {withBackdrop && (
+        <div
+          onClick={onClickBackDrop}
+          className={classNames.backdrop}
+          style={defaultBackdropStyle}
+        />
       )}
+      <Context.Provider value={contextValue}>
+        <div onKeyDown={onKeyDown} className={classNames.window} style={style}>
+          {children}
+          {isResizeable && (
+            <>
+              <ResizeBar onResize={onResize} type={ResizeBarTypes.TOP} />
+              <ResizeBar onResize={onResize} type={ResizeBarTypes.BOTTOM} />
+              <ResizeBar onResize={onResize} type={ResizeBarTypes.LEFT} />
+              <ResizeBar onResize={onResize} type={ResizeBarTypes.RIGHT} />
+              <ResizeBar onResize={onResize} type={ResizeBarTypes.TOP_LEFT} />
+              <ResizeBar onResize={onResize} type={ResizeBarTypes.TOP_RIGHT} />
+              <ResizeBar
+                onResize={onResize}
+                type={ResizeBarTypes.BOTTOM_LEFT}
+              />
+              <ResizeBar
+                onResize={onResize}
+                type={ResizeBarTypes.BOTTOM_RIGHT}
+              />
+            </>
+          )}
+        </div>
+      </Context.Provider>
     </Portal>
   );
 };
