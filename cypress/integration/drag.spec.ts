@@ -21,11 +21,19 @@ context('Drag', () => {
         clientX: centerX,
         clientY: centerY,
       });
-      cy.window()
-        .trigger('mousemove', { clientX: centerX + 5, clientY: centerY - 5 })
-        .trigger('mousemove', { clientX: centerX + 10, clientY: centerY - 10 })
-        .trigger('mousemove', { clientX: centerX + 20, clientY: centerY - 20 })
-        .trigger('mouseup');
+      cy.window().trigger('mousemove', {
+        clientX: centerX + 5,
+        clientY: centerY - 5,
+      });
+      cy.window().trigger('mousemove', {
+        clientX: centerX + 10,
+        clientY: centerY - 10,
+      });
+      cy.window().trigger('mousemove', {
+        clientX: centerX + 20,
+        clientY: centerY - 20,
+      });
+      cy.window().trigger('mouseup');
 
       cy.get('.px-window').should(($window) => {
         expect($window.css('top')).to.be.equal(`${top - 20}px`);
