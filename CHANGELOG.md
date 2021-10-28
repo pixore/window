@@ -2,6 +2,15 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [0.2.0](https://github.com/pixore/window/compare/v0.1.1...v0.2.0) (2021-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* **dependencies:** Requires react ^17
+
+* **dependencies:** update to latest ([f7983f3](https://github.com/pixore/window/commit/f7983f3c9c06da23df3df62258527f8f8d9a5c3e))
+
 ### [0.1.1](https://github.com/pixore/window/compare/v0.1.0...v0.1.1) (2021-06-03)
 
 ## [0.1.0](https://github.com/pixore/window/compare/v0.0.2...v0.1.0) (2019-12-07)
