@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { render } from 'react-dom';
-import { Window, DragArea, useWindow } from '../../src';
+import { Window, DragArea, useWindow, WindowState } from '../../src';
 
 const Size = () => {
   const { windowState } = useWindow();
@@ -11,7 +11,7 @@ const App: React.FC = () => {
   const height = 300;
   const width = 300;
 
-  const [maxSize, setMaxSize] = React.useState();
+  const [maxSize, setMaxSize] = React.useState<Partial<WindowState>>();
   React.useEffect(() => {
     const updateMaxSize = () => {
       setMaxSize({
