@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.1](https://github.com/pixore/window/compare/v0.2.0...v0.2.1) (2021-11-13)
+
+
+### Features
+
+* **window:** add new props ([90af04a](https://github.com/pixore/window/commit/90af04af28873fde0addc4679c35cbaa431747ae))
+* **window:** create ControlledWindow ([fcf258f](https://github.com/pixore/window/commit/fcf258f14ff081aa4993a7bd8945e13c331eee7d))
+
 ## [0.2.0](https://github.com/pixore/window/compare/v0.1.1...v0.2.0) (2021-10-28)
 
 
