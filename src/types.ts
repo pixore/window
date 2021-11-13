@@ -20,3 +20,11 @@ export interface Vector {
   x: number;
   y: number;
 }
+
+export interface WindowBaseProps {
+  className?: string;
+  isResizeable?: boolean;
+  withBackdrop?: boolean;
+  closeInEscape?: boolean;
+  onRequestedClose?: () => void;
+}

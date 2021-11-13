@@ -4,7 +4,7 @@ const getNumberBetween = (min: number, max: number, value: number): number => {
   return Math.min(max, Math.max(min, value));
 };
 
-const getNewState = (
+const getBoundedState = (
   minState: State,
   maxState: State,
   state: State,
@@ -30,4 +30,4 @@ const getNewState = (
 
 const noop = () => undefined;
 
-export { getNewState, noop };
+export { getBoundedState, noop };
