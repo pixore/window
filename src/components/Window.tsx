@@ -8,11 +8,14 @@ import { defaultBackdropStyle, defaultWindowStyle } from '../styles';
 import useMouseDiff from '../hooks/useMouseDiff';
 
 interface PropTypes {
+  className?: string;
   isResizeable?: boolean;
   withBackdrop?: boolean;
   initialState: State;
   minState?: Partial<State>;
   maxState?: Partial<State>;
+  closeInEscape?: boolean;
+  onWindowChange?: (state: State) => void;
   onRequestedClose?: () => void;
 }
 
@@ -41,7 +44,7 @@ const Context = React.createContext<ContextState>({
     console.error('DragArea used outside a Window');
   },
   requestedClose: () => {
-    console.error("This shouln't  happen");
+    console.error("This shouln't happen");
   },
   windowState: defaultMinState,
 });
@@ -49,10 +52,13 @@ const Context = React.createContext<ContextState>({
 const Window: React.FC<PropTypes> = (props) => {
   const {
     onRequestedClose = noop,
+    onWindowChange = noop,
     isResizeable = true,
     children,
     withBackdrop = false,
     initialState,
+    className = '',
+    closeInEscape = true,
   } = props;
   const minState = Object.assign(defaultMinState, props.minState);
   const maxState = Object.assign(defaultMaxState, props.maxState);
@@ -78,6 +84,10 @@ const Window: React.FC<PropTypes> = (props) => {
     });
   };
 
+  React.useEffect(() => {
+    onWindowChange(state);
+  }, [state]);
+
   const { onMouseDown } = useMouseDiff(handleOnDiff);
 
   const onDrag = (event: React.MouseEvent) => {
@@ -91,7 +101,7 @@ const Window: React.FC<PropTypes> = (props) => {
   };
 
   const onKeyDown = (event: React.KeyboardEvent) => {
-    if (event.key === 'Escape') {
+    if (closeInEscape && event.key === 'Escape') {
       event.stopPropagation();
       onRequestedClose();
     }
@@ -112,7 +122,11 @@ const Window: React.FC<PropTypes> = (props) => {
         />
       )}
       <Context.Provider value={contextValue}>
-        <div onKeyDown={onKeyDown} className={classNames.window} style={style}>
+        <div
+          onKeyDown={onKeyDown}
+          className={`${classNames.window} ${className}`}
+          style={style}
+        >
           {children}
           {isResizeable && (
             <>
