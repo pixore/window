@@ -11,6 +11,9 @@
       "types": "./dist/index.d.ts"
     }
   },
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "clean": "rm -rf dist && rm -rf .cache & rm tsconfig.tsbuildinfo",
     "prebuild": "yarn clean",
