@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.3](https://github.com/pixore/window/compare/v0.2.2...v0.2.3) (2022-04-28)
+
+
+### Bug Fixes
+
+* add package files ([258f82f](https://github.com/pixore/window/commit/258f82fa2f06c04fda2fc2af5ba1e75786c5c9cb))
+
 ### [0.2.2](https://github.com/pixore/window/compare/v0.2.1...v0.2.2) (2022-04-28)
 
 ### [0.2.1](https://github.com/pixore/window/compare/v0.2.0...v0.2.1) (2021-11-13)
