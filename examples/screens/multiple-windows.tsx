@@ -1,12 +1,12 @@
 import * as React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Window, DragArea, useWindow, WindowState } from '../../src';
 
-interface PropTypes {
+interface Props {
   index: number;
 }
 
-const WindowContent: React.FC<PropTypes> = () => {
+const WindowContent: React.FC<Props> = () => {
   const { requestedClose } = useWindow();
   return <button onClick={requestedClose}>close</button>;
 };
@@ -87,4 +87,5 @@ const App: React.FC = () => {
   );
 };
 
-render(<App />, document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);

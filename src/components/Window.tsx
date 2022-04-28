@@ -3,11 +3,12 @@ import { State, Vector, WindowBaseProps } from '../types';
 import { getBoundedState, noop } from '../utils';
 import ControlledWindow from '../components/ControlledWindow';
 
-interface PropTypes extends WindowBaseProps {
+interface Props extends WindowBaseProps {
   initialState: State;
   minState?: Partial<State>;
   maxState?: Partial<State>;
   onWindowChange?: (state: State) => void;
+  children: React.ReactNode;
 }
 
 const defaultMinState: State = {
@@ -24,7 +25,7 @@ const defaultMaxState: State = {
   height: Infinity,
 };
 
-const Window: React.FC<PropTypes> = (props) => {
+const Window = (props: Props) => {
   const {
     onRequestedClose = noop,
     onWindowChange = noop,

@@ -7,10 +7,11 @@ import useMouseDiff from '../hooks/useMouseDiff';
 import { ResizeBarTypes, State, Vector, WindowBaseProps } from '../types';
 import { defaultBackdropStyle, defaultWindowStyle } from '../styles';
 
-interface PropTypes extends WindowBaseProps {
+interface Props extends WindowBaseProps {
   state: State;
   onMove: (diff: Vector) => void;
   onResize: (diff: State) => void;
+  children: React.ReactNode;
 }
 
 interface ContextState {
@@ -34,7 +35,7 @@ const Context = React.createContext<ContextState>({
   },
 });
 
-const ControllerdWindow: React.FC<PropTypes> = (props) => {
+const ControllerdWindow = (props: Props) => {
   const {
     onRequestedClose = noop,
     onMove,

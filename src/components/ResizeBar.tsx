@@ -4,12 +4,12 @@ import Config from '../contexts/Config';
 import useMouseDiff from '../hooks/useMouseDiff';
 import { defaultResizeBarStyle, defaultResizeStylesByType } from '../styles';
 
-interface PropTypes {
+interface Props {
   type: ResizeBarTypes;
   onResize: (diff: State) => void;
 }
 
-const ResizeBar: React.FC<PropTypes> = (props) => {
+const ResizeBar = (props: Props) => {
   const { type, onResize } = props;
   const { onMouseDown } = useMouseDiff((diff: Vector) =>
     onResize(getDiff(type, diff)),

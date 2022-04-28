@@ -49,13 +49,14 @@ export interface ConfigState {
   classNames: ClassNames;
 }
 
-interface PropTypes {
+interface Props {
   classNames?: OptionalClassNames;
+  children: React.ReactNode;
 }
 
 const ConfigContext = React.createContext<ConfigState>(initialValue);
 
-const Provider: React.FC<PropTypes> = (props) => {
+const Provider = (props: Props) => {
   const { children, classNames = {} } = props;
 
   const {

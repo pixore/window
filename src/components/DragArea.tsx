@@ -1,7 +1,9 @@
 import * as React from 'react';
 import { useWindow } from './Window';
 
-const DragArea: React.FC<React.HTMLProps<HTMLDivElement>> = (props) => {
+type Props = React.HTMLProps<HTMLDivElement>;
+
+const DragArea = (props: Props) => {
   const { onDrag } = useWindow();
   return <div {...props} onMouseDown={onDrag} />;
 };

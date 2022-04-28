@@ -12,9 +12,10 @@ export {
   Config,
   DragArea,
   useWindow,
-  WindowState,
   ControlledWindow,
   getBoundedState,
-  Vector,
 };
+
+export type { WindowState, Vector };
+
 export default Window;

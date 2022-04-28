@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { render } from 'react-dom';
+import { createRoot } from 'react-dom/client';
 import { Window, DragArea, useWindow, WindowState } from '../../src';
 
 const Size = () => {
@@ -43,4 +43,5 @@ const App: React.FC = () => {
   );
 };
 
-render(<App />, document.getElementById('root'));
+const root = createRoot(document.getElementById('root'));
+root.render(<App />);
