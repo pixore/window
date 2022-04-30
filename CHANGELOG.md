@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.2.7](https://github.com/pixore/window/compare/v0.2.6...v0.2.7) (2022-04-30)
+
+
+### Bug Fixes
+
+* use correct export from reach portal ([0b13c67](https://github.com/pixore/window/commit/0b13c67f72c01322ae6e8cb454735860eb6dfa4e))
+
 ### [0.2.6](https://github.com/pixore/window/compare/v0.2.5...v0.2.6) (2022-04-28)
 
 ### [0.2.5](https://github.com/pixore/window/compare/v0.2.4...v0.2.5) (2022-04-28)
