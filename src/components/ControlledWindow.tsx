@@ -1,5 +1,5 @@
 import * as React from 'react';
-import Portal from '@reach/portal';
+import { Portal } from '@reach/portal';
 import { noop } from '../utils';
 import ResizeBar from './ResizeBar';
 import Config from '../contexts/Config';
